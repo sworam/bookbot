@@ -21,14 +21,21 @@ def calc_character_dict(text: str) -> int:
     return character_dict
 
 
-def main():
-    content = read_book("books/frankenstein.txt")    
-    word_count = calc_word_count(content)
-    print(word_count)
+def print_report(path: str, word_count: int, character_dict: dict):
+    print(f"--- Begin report of {path} ---")
+    print(f"{word_count} words found in the document\n")
+    sorted_dict = {k: v for k, v in sorted(character_dict.items(), key=lambda item: item[1], reverse=True)}
+    for key in sorted_dict:
+        print(f"The {repr(key)} character was found {sorted_dict[key]} times")
 
-    character_dict = calc_character_dict(content)    
-    for key in character_dict:
-        print(f"{key}: {character_dict[key]}")
+
+def main():
+    path = "books/frankenstein.txt"
+    content = read_book(path)    
+    word_count = calc_word_count(content)
+    character_dict = calc_character_dict(content)
+    print_report(path, word_count, character_dict)
+
 
 if __name__ == "__main__":
     main()
